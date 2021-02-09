@@ -1,0 +1,38 @@
+###############################################################################
+# Seção trigger indica o disparo da esteira e em que branch será utilizada
+#         
+###############################################################################
+trigger:
+  batch: true
+  branches:
+    include:
+      - develop
+      - release/*
+    exclude:
+      - master 
+###############################################################################
+# Seção resources: informações do repositorio de Execução
+###############################################################################
+
+resources:
+  repositories:
+    - repository: ACC-20200901-RFScriptPipeline
+      type: git
+      name: Sistemas Comerciais - Artifacts/ScriptsPipelines
+      ref: ACC-20200901-RFScriptPipeline
+
+###############################################################################
+# Seção extends : - Chama o pipeline + parâmetros 
+###############################################################################
+extends:
+  template: pipelines/springboot/pipeline_feed.yml@ACC-20200901-RFScriptPipeline # path do arquivo da esteira
+  parameters: # lista dos parametros esperados no pipeline.
+    #SITEnvironment: 'aks_san5-dev-aks-san5-dev-devops-archdev01-1598366425826' # Variaval de controle (opcional) 
+    #k8sServiceConnection: 'aks-san5-dev-devops-arch-7050' # Service conection do AKS (opcional)
+    #SITEnvNamespace: 'devops-arch' # nome do namespace (opcional)
+    SonarTrueFalse: 'false'
+    MVNTipoBuild: 'clean deploy'   # gera um package ou um deploy (opcional)
+    #Dockertag: '$(Build.SourceBranchName).$(Build.BuildId)' # (opcional)
+    #MVNrevision: '1.0.4-SNAPSHOT'
+    #imagename: '$(Build.Repository.Name)' # (opcional)
+    #BuildWorkSapce: '$(Build.SourcesDirectory)' # (opcional)

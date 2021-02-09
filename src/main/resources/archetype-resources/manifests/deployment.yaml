@@ -1,0 +1,42 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ${artifactId}-sct
+data:
+  jdbcpassword: Acc@2020
+type: Opaque
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ${artifactId}-cfg
+data:
+  serverport: "8080"
+  springprofileactive: "dev"
+  input: "${inputTopic}"
+  jdbcurl: "misan5dev.07a5c7548941.database.windows.net"
+  jdbcusername: "SA"
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ${artifactId}-svc
+  labels:
+    app: ${artifactId}
+spec:
+  ports:
+    - port: 8080
+      name: http
+  selector:
+    app: ${artifactId}
+
+
+

@@ -1,0 +1,19 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+
+resources:
+  repositories:
+    - repository: pipeline-scripts
+      type: git
+      name: name
+      ref: master
+
+#Parametros utilizadas durante o processo de build para CI e CD
+
+extends:
+  template: pipelines/springboot/pipeline.yml@pipeline-scripts
+  parameters:
+    namespace: 'arch'

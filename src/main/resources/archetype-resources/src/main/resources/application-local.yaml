@@ -1,0 +1,28 @@
+server:
+  port: 8080
+  servlet.context-path: /ms
+
+management:
+  endpoints.web.exposure.include: "*"
+  endpoint:
+    loggers.enabled: true
+    prometheus.enabled: true
+    metrics:
+      enabled: true
+      export.prometheus.enabled: true
+
+spring:
+  application.name: ms    
+# Spring JPA
+  datasource:
+    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://localhost;databaseName=Master
+    username: SA
+    password: senha
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.SQLServer2012Dialect
+        ddl-auto: update
